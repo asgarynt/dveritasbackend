@@ -28,6 +28,9 @@ public class Usuario {
 	private String avatar;
 	
 	 @OneToMany(mappedBy = "usuario")
+	    private List<Publicacion> publicaciones;
+	
+	 @OneToMany(mappedBy = "usuario")
 	    private List<Like> likes;
 	
 	

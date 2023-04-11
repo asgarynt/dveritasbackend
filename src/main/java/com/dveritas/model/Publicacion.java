@@ -1,5 +1,6 @@
 package com.dveritas.model;
 
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,10 +26,17 @@ public class Publicacion {
 	private Long id;
 	private String descripcion;
 	private String imagen;
+	
+	@Column(insertable = false)
 	private String fecha_publicacion;
+	
+	@ManyToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
+    private Usuario usuario;
 	
 	@OneToMany(mappedBy = "publicacion")
 	private List<Like> likes;
+	
 	
 	
 	public Publicacion() {
@@ -34,12 +44,11 @@ public class Publicacion {
 	}
 	
 	
-	public Publicacion(Long id, String descripcion, String imagen, String fecha_publicacion) {
+	public Publicacion(Long id, String descripcion, String imagen, Usuario usuario) {
 		this.id = id;
 		this.descripcion = descripcion;
 		this.imagen = imagen;
-		this.fecha_publicacion = fecha_publicacion;
-	
+		this.usuario = usuario;
 	}
 
 
@@ -71,19 +80,6 @@ public class Publicacion {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
-
-
-	public String getFechaPublicacion() {
-		return fecha_publicacion;
-	}
-
-
-	public void setFechaPublicacion(String fecha_publicacion) {
-		this.fecha_publicacion = fecha_publicacion;
-	}
-
-	
-
 	
 	public String getFecha_publicacion() {
 		return fecha_publicacion;
@@ -95,12 +91,20 @@ public class Publicacion {
 	}
 
 
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 
 
 	@Override
 	public String toString() {
-		return "Publicacion [id=" + id + ", descripcion=" + descripcion + ", imagen=" + imagen + ", likes=" + likes
-				+ ", fecha_publicacion=" + fecha_publicacion + "]";
+		return "Publicacion [id=" + id + ", descripcion=" + descripcion + ", imagen=" + imagen +
+				", fecha_publicacion= ]";
 	}
 }
