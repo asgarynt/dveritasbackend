@@ -22,7 +22,9 @@ public class Usuario {
 	@Column(name = "id", unique = true, nullable = false)
 	
 	private Long id;
+	@Column(nullable = false, unique = true)
 	private String nombre;
+	@Column(nullable = false, unique = true)
 	private String correo;
 	private String password;
 	private String avatar;

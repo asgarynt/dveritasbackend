@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import com.dveritas.utils.SHAUtil;
 import com.dveritas.model.Usuario;
 
 @Service
@@ -37,14 +39,20 @@ public class UsuarioService {
 				.orElseThrow(() -> new IllegalStateException("El Producto " + "con el id " + Id + " no existe."));
 
 	}
+	
 	public void crearUsuario(Usuario usuario) {
-		Optional<Usuario> usuarioBuscado = usuarioRepository.findByName(usuario.getCorreo());
-		if (usuarioBuscado.isPresent()) {
-			throw new IllegalStateException("El Usuario con el nombre" + usuario.getCorreo() + " ya existe.");
-		} else {
-			usuarioRepository.save(usuario);
-		}
-	}
+        Optional<Usuario> correoExistente = usuarioRepository.findByCorreo(usuario.getCorreo());
+        Optional<Usuario> nombreExistente = usuarioRepository.findByNombre(usuario.getNombre());
+        if (correoExistente.isPresent()) {
+            throw new IllegalStateException("El correo ya está en uso intenta con otro");
+        } else if (nombreExistente.isPresent()) {
+            throw new IllegalStateException("El nombre de usuario ya está en uso intenta con otro");
+        } else {
+            usuario.setPassword( SHAUtil.createHash(usuario.getPassword()) );
+            usuarioRepository.save(usuario);
+        }
+    }
+	
 
 	public void actualizarUsuario(Long Id, String nombre, String correo, String password, String avatar) {
 

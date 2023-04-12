@@ -54,6 +54,4 @@ public class PublicacionController {
 	   public long totalPublicaciones() {
 	        return publicacionService.numeroPublicaciones();
 	    }
-	
-	
 }

@@ -1,7 +1,11 @@
 package com.dveritas.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,10 +46,17 @@ public class UsuarioController {
 	}
 	
 	@PostMapping
-	public void postUsuario(@RequestBody Usuario usuario) { 
-
-		usuarioService.crearUsuario(usuario); 
-	}
+    public ResponseEntity<Map<String, String>> registrarUsuario(@RequestBody Usuario usuario) {
+        Map<String, String> respuesta = new HashMap<>();
+        try {
+            usuarioService.crearUsuario(usuario);
+            respuesta.put("mensaje", "Usuario registrado exitosamente");
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            respuesta.put("mensaje", e.getMessage());
+            return ResponseEntity.badRequest().body(respuesta);
+        }
+    }
 	
 	@PutMapping(path = "{Id}")
 	public void updateUsuario(@PathVariable("Id") Long Id, @RequestParam(required = false) String nombre,
