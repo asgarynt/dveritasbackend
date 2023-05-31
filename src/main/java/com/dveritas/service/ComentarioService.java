@@ -43,7 +43,14 @@ public class ComentarioService {
 			comentarioRepository.save(comentario); 
 
 		}
-	}
+
+	 public Long totalComentarios(Long publicacionId) {
+	    	return comentarioRepository.countByPublicacionId(publicacionId);
+	    }
+
+}
+
+
 
 
 

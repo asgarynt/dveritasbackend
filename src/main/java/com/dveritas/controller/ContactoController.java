@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dveritas.model.Contacto;
 import com.dveritas.service.ContactoService;
 
-@CrossOrigin
 
 @RestController
 

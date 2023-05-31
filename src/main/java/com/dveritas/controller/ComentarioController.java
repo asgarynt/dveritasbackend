@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,6 @@ import com.dveritas.model.Comentario;
 import com.dveritas.model.Publicacion;
 import com.dveritas.model.Usuario;
 import com.dveritas.service.ComentarioService;
-
-@CrossOrigin
 
 @RestController
 
@@ -47,6 +46,16 @@ public class ComentarioController {
 
 		comentarioService.crearComentario(comentario); 
 	}
+	
+	
+	 @GetMapping(path = "/publicaciones/{id}/cantidad")
+	    public ResponseEntity<Long> totalLikes(@PathVariable Long id) {
+	        Long cantidadComentarios = comentarioService.totalComentarios(id);
+	        return ResponseEntity.ok(cantidadComentarios);
+	    }
+	    
+	
+	
 	
 }
 

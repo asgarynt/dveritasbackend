@@ -1,5 +1,9 @@
 package com.dveritas.service;
 
+import com.dveritas.model.Usuario;
+import com.dveritas.model.Publicacion;
+
+
 import java.util.List;
 
 
@@ -34,5 +38,31 @@ public class LikeService {
     public Long totalLikes(Long publicacionId) {
     	return likeRepository.countByPublicacionId(publicacionId);
     }
+    
+    public void eliminarLike(Long idUsuario, Long idPublicacion) {
+        Like likeExistente = likeRepository.findByUsuarioIdAndPublicacionId(idUsuario, idPublicacion);
+        if (likeExistente != null) {
+            likeRepository.delete(likeExistente);
+        } 
+    }
+    
+    public void agregarLike(Long idUsuario, Long idPublicacion) {
+   
+            Usuario usuario = new Usuario();
+            usuario.setId(idUsuario);
+            Publicacion publicacion = new Publicacion();
+            publicacion.setId(idPublicacion);
+            Like nuevoLike = new Like();
+            nuevoLike.setUsuario(usuario);
+            nuevoLike.setPublicacion(publicacion);
+            likeRepository.save(nuevoLike);
+   
+    }
+    
+    public boolean obtenerEstadoLike(Long idUsuario, Long idPublicacion) {
+        Like likeExistente = likeRepository.findByUsuarioIdAndPublicacionId(idUsuario, idPublicacion);
+        return likeExistente != null;
+    }
+    
 
 }

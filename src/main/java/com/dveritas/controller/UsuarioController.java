@@ -20,7 +20,7 @@ import com.dveritas.model.Usuario;
 import com.dveritas.service.UsuarioService;
 
 
-@CrossOrigin
+//@CrossOrigin("*")
 
 @RestController
 
@@ -71,4 +71,6 @@ public class UsuarioController {
 	        return usuarioService.numeroUsuarios();
 	    }
 
+	  
+	  
 }

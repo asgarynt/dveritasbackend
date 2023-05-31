@@ -1,8 +1,10 @@
 package com.dveritas.model;
 
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,14 +30,17 @@ public class Publicacion {
 	private String imagen;
 	
 	@Column(insertable = false)
-	private String fecha_publicacion;
+	private Date fecha_publicacion;
 	
 	@ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario usuario;
 	
-	@OneToMany(mappedBy = "publicacion")
+	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Like> likes;
+	
+	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comentario> comentarios;
 	
 	
 	
@@ -81,12 +86,12 @@ public class Publicacion {
 		this.imagen = imagen;
 	}
 	
-	public String getFecha_publicacion() {
+	public Date getFecha_publicacion() {
 		return fecha_publicacion;
 	}
 
 
-	public void setFecha_publicacion(String fecha_publicacion) {
+	public void setFecha_publicacion(Date fecha_publicacion) {
 		this.fecha_publicacion = fecha_publicacion;
 	}
 

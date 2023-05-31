@@ -25,14 +25,12 @@ public class UsuarioService {
 
 	}
 
-	// Leer Contacto (Read)
 	public List<Usuario> leerUsuarios() {
 
 		return usuarioRepository.findAll();
 
 	}
 
-	// Leer Contacto (Read)
 	public Usuario leerUsuario(Long Id) {
 
 		return usuarioRepository.findById(Id)
@@ -77,4 +75,25 @@ public class UsuarioService {
         return usuarioRepository.contadorUsuarios();
     }
 
+	
+			public Long obtenerIdUsuarioPorCorreo(String correo) {
+			    Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(correo);
+			    Usuario usuario = usuarioOptional.orElseThrow(() -> new IllegalStateException("El usuario con el correo " + correo + " no existe."));
+			    return usuario.getId();
+			}
+
+			
+			public boolean loginCifrado(String correo, String password) {
+				boolean respuesta=false;
+				Optional<Usuario> usuario = usuarioRepository.findByCorreo(correo);
+				if (usuario.isPresent()) {
+					System.out.println("Password SHA: " + SHAUtil.createHash(password));
+					if (SHAUtil.verifyHash(password, usuario.get().getPassword()) ) {
+						respuesta=true;
+				}
+			}
+				return respuesta;
+			}
+	
+	
 }

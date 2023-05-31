@@ -10,5 +10,7 @@ import com.dveritas.model.Like;
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
     Long countByPublicacionId(Long publicacionId);
-   
+ 
+    Like findByUsuarioIdAndPublicacionId(Long idUsuario, Long idPublicacion);
+    
 }
