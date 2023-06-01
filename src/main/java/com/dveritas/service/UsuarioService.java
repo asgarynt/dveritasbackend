@@ -62,7 +62,7 @@ public class UsuarioService {
 			if (correo != null)
 				usuarioABuscar.setCorreo(correo);
 			if (password != null)
-				usuarioABuscar.setPassword(password);
+				usuarioABuscar.setPassword( SHAUtil.createHash(usuarioABuscar.getPassword()) );
 			if (avatar != null)
 				usuarioABuscar.setAvatar(avatar);
 			usuarioRepository.save(usuarioABuscar);

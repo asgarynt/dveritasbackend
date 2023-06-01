@@ -2,11 +2,13 @@ package com.dveritas.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.io.File;
 import java.util.HashMap;
 
-
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,5 +74,21 @@ public class UsuarioController {
 	    }
 
 	  
-	  
+	  @GetMapping("/imagenes/{nombreImagen}")
+	    public ResponseEntity<Resource> obtenerImagen(@PathVariable String nombreImagen) {
+	        // Construye la ruta completa de la imagen en el directorio /src/main/webapp
+	        String rutaImagen = "src/main/webapp/" + nombreImagen;
+	        File imagenFile = new File(rutaImagen);
+
+	        if (imagenFile.exists()) {
+	            Resource imagen = new FileSystemResource(imagenFile);
+
+	            return ResponseEntity.ok()
+	                    .contentType(MediaType.IMAGE_JPEG)
+	                    .body(imagen);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    }
+
 }
